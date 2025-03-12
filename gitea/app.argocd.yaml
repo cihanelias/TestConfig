@@ -16,12 +16,12 @@ spec:
         - $values/gitea/helm/values.yaml
     # self referencing this repo to inject values.yaml
     - repoURL: 'https://github.com/cihanelias/TestConfig.git'
-      targetRevision: TestConfig # TODO when old cluster can be deconstructed, change this branch
+      targetRevision: master # TODO when old cluster can be deconstructed, change this branch
       ref: values
     # extra yamls for additional ressources
     - repoURL: 'https://github.com/cihanelias/TestConfig.git'
       path: gitea/k8s
-      targetRevision: TestConfig # TODO when old cluster can be deconstructed, change this branch
+      targetRevision: master # TODO when old cluster can be deconstructed, change this branch
       directory:
         recurse: true
         include: "{*.yaml,*.yml}"
