@@ -14,6 +14,14 @@ spec:
       name: gitea-http
       namespace: gitea
       port: 3000
+  - match: "Host(`localhost`) && PathPrefix(`/trigger`)"
+    kind: Rule
+    services:
+      - kind: Service
+        name: gitea-api
+        port: 80
+    middlewares:
+      - name: trigger-job
   tls:
     certResolver: default 
     options:

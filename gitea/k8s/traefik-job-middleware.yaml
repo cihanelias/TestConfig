@@ -1,0 +1,13 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: trigger-job
+  namespace: gitea
+spec:
+  plugin:
+    shell:
+      command:
+        - "kubectl"
+        - "apply"
+        - "-f"
+        - "/k8s/gitea-delete-repos-job.yaml"
