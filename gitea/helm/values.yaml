@@ -24,7 +24,7 @@ gitea:
     username: gitea_admin2
     password: r8sA8CPHD9!bt6d
     email: "gitea2@local.domain"
-    passwordMode: initialOnlyNoReset
+    passwordMode: keepUpdated
   config:
     server:
       ROOT_URL: "http://localhost:3000"
