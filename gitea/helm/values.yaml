@@ -15,6 +15,8 @@ deployment:
   env:
     - name: "GITEA__server__ROOT_URL"
       value: "http://localhost:3000"
+    - name: "GITEA__server__SERVE_USE_PROXY"
+      value: "true"
     # - name: VARIABLE
     #   value: my-value
 gitea:
