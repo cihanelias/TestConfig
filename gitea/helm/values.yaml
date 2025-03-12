@@ -11,14 +11,7 @@
 #       paths:
 #         - path: /gitea
 #           pathType: Prefix
-deployment:
-  env:
-    - name: "GITEA__server__ROOT_URL"
-      value: "http://localhost:3000"
-    - name: "GITEA__server__SERVE_USE_PROXY"
-      value: "true"
-    # - name: VARIABLE
-    #   value: my-value
+
 gitea:
   ## @param gitea.admin.username Username for the Gitea admin user
   ## @param gitea.admin.existingSecret Use an existing secret to store admin user credentials
