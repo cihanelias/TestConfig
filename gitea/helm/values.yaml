@@ -15,8 +15,6 @@ deployment:
   env:
     - name: "GITEA__server__ROOT_URL"
       value: "http://localhost:3000"
-    - name: "GITEA__server__STATIC_URL_PREFIX"
-      value: "/assets"
     - name: "GITEA__server__SERVE_USE_PROXY"
       value: "true"
     # - name: VARIABLE
@@ -37,7 +35,6 @@ gitea:
   config:
     server:
       ROOT_URL: "http://localhost:3000"
-      STATIC_URL_PREFIX: "/assets"
       SERVE_USE_PROXY: true
 strategy:
   type: "RollingUpdate"
