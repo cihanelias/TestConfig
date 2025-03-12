@@ -7,9 +7,6 @@ spec:
   - websecure
   routes:
   - match: Host(`localhost`) # && PathPrefix(`/gitea`)
-    middlewares:
-    - name: gitea-strip-prefix
-      namespace: gitea
     kind: Rule
     priority: 10
     services:
