@@ -6,7 +6,7 @@ spec:
   entryPoints:
   - websecure
   routes:
-  - match: Host(`localhost`)  && PathPrefix(`/gitea`)
+  - match: Host(`localhost`) # && PathPrefix(`/gitea`)
     middlewares:
     - name: gitea-strip-prefix
       namespace: gitea
