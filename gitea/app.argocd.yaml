@@ -1,47 +1,46 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gitea
-  namespace: argocd
+  name: gitea # name of the deployment
+  namespace: argocd # namespace where this manifest lives, not the app it self!
 spec:
-  project: default
+  project: default # argocd project (mostly controlled by projects.argocd.yaml)
   sources:
-    # Helm Chart von Gitea (bleibt gleich)
+    # helm chart source, note that the folder name has to be correct for the values
     - repoURL: https://dl.gitea.com/charts/
       targetRevision: 11.0.0
       chart: gitea
       helm:
         valueFiles:
         - $values/gitea/helm/values.yaml
-
-    # Lokale Datei für `values.yaml` statt GitHub Repo
-    - repoURL: '127.0.0.1:9418/gitea_k8s'
-      path: helm
-      targetRevision: HEAD
+    # self referencing this repo to inject values.yaml
+    - repoURL: 'https://github.com/cihanelias/TestConfig.git'
+      targetRevision: TestConfig # TODO when old cluster can be deconstructed, change this branch
       ref: values
-
-    # Lokaler Pfad für zusätzliche Kubernetes YAMLs (statt GitHub)
-    - repoURL: '127.0.0.1:9418/gitea_k8s'
-      path: k8s
-      targetRevision: HEAD
+    # extra yamls for additional ressources
+    - repoURL: 'https://github.com/cihanelias/TestConfig.git'
+      path: gitea/k8s
+      targetRevision: TestConfig # TODO when old cluster can be deconstructed, change this branch
       directory:
         recurse: true
         include: "{*.yaml,*.yml}"
-
   destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: gitea
-
+    server: 'https://kubernetes.default.svc' # kubernets cluster
+    namespace: gitea # namespace inside cluster
   syncPolicy:
     syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
+      - CreateNamespace=true # create destination kubernetes namespace
+      - ServerSideApply=true # for meta data annotation too long (last applied field)
       - RespectIgnoreDifferences=true
     automated:
-      prune: true
-  ignoreDifferences:
+      #selfHeal: true # auto sync and repair
+      prune: true    # delete ressources after deletion of this manifest 
+      spec:
+  ignoreDifferences: # https://github.com/argoproj/argo-cd/issues/16640
   - kind: PersistentVolume
     jsonPointers:
     - /spec/claimRef/resourceVersion
     - /spec/claimRef/uid
     - /status/lastPhaseTransitionTime
+---
