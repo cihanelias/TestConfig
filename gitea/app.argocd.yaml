@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitea
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    # Helm Chart von Gitea (bleibt gleich)
+    - repoURL: https://dl.gitea.com/charts/
+      targetRevision: 11.0.0
+      chart: gitea
+      helm:
+        valueFiles:
+        - $values/gitea/helm/values.yaml
+
+    # Lokale Datei für `values.yaml` statt GitHub Repo
+    - repoURL: '127.0.0.1:9418/gitea_k8s'
+      path: helm
+      targetRevision: HEAD
+      ref: values
+
+    # Lokaler Pfad für zusätzliche Kubernetes YAMLs (statt GitHub)
+    - repoURL: '127.0.0.1:9418/gitea_k8s'
+      path: k8s
+      targetRevision: HEAD
+      directory:
+        recurse: true
+        include: "{*.yaml,*.yml}"
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: gitea
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+      - RespectIgnoreDifferences=true
+    automated:
+      prune: true
+  ignoreDifferences:
+  - kind: PersistentVolume
+    jsonPointers:
+    - /spec/claimRef/resourceVersion
+    - /spec/claimRef/uid
+    - /status/lastPhaseTransitionTime
