@@ -4,7 +4,7 @@ metadata:
   name: gitea
 spec:
   entryPoints:
-  - websecure
+  - web
   routes:
   - match: Host(`localhost`) && PathPrefix(`/gitea`)
     middlewares:
