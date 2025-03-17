@@ -1,6 +1,7 @@
 # Setze dein Gitea API-Token und Server-URL
-$token = "8f093b1b5f5e739a092a49518a9de4fcddda283c"
-$gitea_url = "http://localhost:3000"  # Ändere das auf deine Gitea-URL
+$token = "8859367dd51e3bf9e3e7fdafc5b1c2d46b57832f"
+#$gitea_url = "http://localhost:3000"  # Ändere das auf deine Gitea-URL
+$gitea_url = "https://k8s.ki.fh-swf.de/gitea"  # Ändere das auf deine Gitea-URL
 
 # API-Endpunkt zum Abrufen aller Repositories
 $repos_url = "$gitea_url/api/v1/user/repos"

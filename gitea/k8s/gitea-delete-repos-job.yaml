@@ -21,12 +21,12 @@ spec:
           try {
               $repos = Invoke-RestMethod -Uri $repos_url -Method GET -Headers $headers
           } catch {
-              Write-Host "Fehler beim Abrufen der Repository-Liste: $($_.Exception.Message)"
+              Write-Host "❌ Fehler beim Abrufen der Repository-Liste: $($_.Exception.Message)" -ForegroundColor Red
               exit 1
           }
 
           if ($repos.Count -eq 0) {
-              Write-Host "Keine Repositories gefunden."
+              Write-Host "🚀 Keine Repositories gefunden." -ForegroundColor Yellow
               exit 0
           }
 
@@ -36,11 +36,11 @@ spec:
               $delete_url = "$gitea_url/api/v1/repos/$repo_owner/$repo_name"
 
               try {
-                  Write-Host "Lösche Repository: $repo_owner/$repo_name ..."
+                  Write-Host "🗑️ Lösche Repository: ${repo_owner}/${repo_name} ..." -ForegroundColor Cyan
                   Invoke-RestMethod -Uri $delete_url -Method DELETE -Headers $headers
-                  Write-Host "Repository gelöscht: $repo_owner/$repo_name"
+                  Write-Host "✅ Repository gelöscht: ${repo_owner}/${repo_name}" -ForegroundColor Green
               } catch {
-                  Write-Host "Fehler beim Löschen von $repo_owner/$repo_name: $($_.Exception.Message)"
+                  Write-Host "❌ Fehler beim Löschen von ${repo_owner}/${repo_name}: $($_.Exception.Message)" -ForegroundColor Red
               }
           }
       restartPolicy: Never

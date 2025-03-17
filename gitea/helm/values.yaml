@@ -36,8 +36,8 @@ gitea:
     passwordMode: keepUpdated
   config:
     server:
-      ROOT_URL: "http://localhost:3000"
-      STATIC_URL_PREFIX: ""
+      ROOT_URL: "http://localhost:3000/gitea"
+      STATIC_URL_PREFIX: "/gitea"
       SERVE_USE_PROXY: true
 strategy:
   type: "RollingUpdate"
