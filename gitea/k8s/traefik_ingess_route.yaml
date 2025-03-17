@@ -6,7 +6,7 @@ spec:
   entryPoints:
   - websecure
   routes:
-  - match: Host(`localhost`) # && PathPrefix(`/gitea`)
+  - match: Host(`localhost`)  && PathPrefix(`/gitea`)
     kind: Rule
     priority: 10
     services:
